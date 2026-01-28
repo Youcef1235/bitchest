@@ -1,0 +1,44 @@
+{% extends 'base_app.html.twig' %}
+{% block title %}User Management - BitChest{% endblock %}
+
+{% block nav %}
+    <a href="{{ path('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ path('admin_users') }}" class="active">User Management</a>
+    <a href="{{ path('admin_cryptos') }}">Cryptos</a>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Users Management</h2>
+    <a href="{{ path('admin_user_new') }}" class="btn-green" style="text-decoration:none; padding: 8px 20px; border-radius:6px;">+ Add User</a>
+</div>
+<div class="bc-card p-0">
+    <table class="table mb-0" style="border-radius:10px; overflow:hidden;">
+        <thead style="background:#e0e0e0;">
+            <tr>
+                <th class="ps-3">Email</th>
+                <th>Name</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr style="border-bottom:1px solid #eee;">
+                <td class="ps-3">{{ user.email }}</td>
+                <td>{{ user.firstname }} {{ user.lastname }}</td>
+                <td>€ {{ user.balance|number_format(2, '.', ',') }}</td>
+                <td>
+                    <a href="{{ path('admin_user_edit', {id: user.id}) }}" style="color:#35A7FF; margin-right:1rem;">Edit</a>
+                    <form method="post" action="{{ path('admin_user_delete', {id: user.id}) }}" class="d-inline"
+                          onsubmit="return confirm('Delete this user?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button type="submit" style="background:none; border:none; color:#FF5964; cursor:pointer; font-weight:bold;">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

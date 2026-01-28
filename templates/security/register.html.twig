@@ -1,0 +1,35 @@
+{% extends 'base_auth.html.twig' %}
+{% block title %}Register - BitChest{% endblock %}
+
+{% block content %}
+<div style="max-width:440px; margin: 3rem auto;">
+    <h2 class="text-center mb-4" style="color:#000; font-weight:bold;">Create Account</h2>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            {{ form_widget(form.firstname, {'attr': {'class': 'bc-input'}}) }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            {{ form_widget(form.lastname, {'attr': {'class': 'bc-input'}}) }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            {{ form_widget(form.email, {'attr': {'class': 'bc-input', 'placeholder': 'your@email.com'}}) }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'bc-input', 'placeholder': '••••••••'}}) }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'bc-input', 'placeholder': '••••••••'}}) }}
+        </div>
+        {{ form_errors(form) }}
+        <button type="submit" class="btn-green-full mt-2">Register</button>
+    {{ form_end(form) }}
+    <p class="text-center mt-3" style="font-size:0.9rem;">
+        Already have an account? <a href="{{ path('app_login') }}" style="color:#35A7FF; font-weight:bold;">Sign in</a>
+    </p>
+</div>
+{% endblock %}

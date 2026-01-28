@@ -1,0 +1,26 @@
+{% extends 'base_auth.html.twig' %}
+{% block title %}Sign In - BitChest{% endblock %}
+
+{% block content %}
+<div style="max-width:400px; margin: 4rem auto;">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <h2 class="text-center mb-4" style="color:#000; font-weight:bold;">Sign In</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input class="bc-input" type="email" name="email" value="{{ last_username }}" placeholder="your@email.com" required autofocus>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input class="bc-input" type="password" name="password" placeholder="••••••••" required>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <button class="btn-green-full mt-2" type="submit">Login</button>
+    </form>
+    <p class="text-center mt-3" style="font-size:0.9rem;">
+        Don't have an account? <a href="{{ path('app_register') }}" style="color:#35A7FF; font-weight:bold;">Sign up</a>
+    </p>
+</div>
+{% endblock %}

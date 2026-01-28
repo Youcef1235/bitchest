@@ -1,0 +1,43 @@
+{% extends 'base_app.html.twig' %}
+{% block title %}Admin Dashboard - BitChest{% endblock %}
+
+{% block nav %}
+    <a href="{{ path('admin_dashboard') }}" class="active">Dashboard</a>
+    <a href="{{ path('admin_users') }}">User Management</a>
+    <a href="{{ path('admin_cryptos') }}">Cryptos</a>
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-number">{{ userCount }}</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-number">{{ cryptos|length }}</div>
+            <div class="stat-label">Cryptocurrencies</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Active Markets</div>
+        </div>
+    </div>
+</div>
+<div class="bc-card">
+    <h6 class="mb-3">Recent Activity</h6>
+    <div style="border-bottom:1px solid #eee; padding: 8px 0; display:flex; justify-content:space-between;">
+        <span>Platform started</span>
+        <span style="color:#999; font-size:0.85rem;">today</span>
+    </div>
+    <div style="border-bottom:1px solid #eee; padding: 8px 0; display:flex; justify-content:space-between;">
+        <span>{{ userCount }} users registered</span>
+        <span style="color:#999; font-size:0.85rem;">total</span>
+    </div>
+</div>
+{% endblock %}

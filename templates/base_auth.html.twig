@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block theme %}theme-public{% endblock %}
+
+{% block body %}
+<nav class="bc-navbar">
+    <a class="brand" href="#">BitChest</a>
+</nav>
+<div class="bc-page">
+    {% block content %}{% endblock %}
+</div>
+<footer class="bc-footer">© 2025 BitChest</footer>
+{% endblock %}

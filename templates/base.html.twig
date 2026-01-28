@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BitChest{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+        .bc-navbar { padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+        .bc-navbar .brand { font-size: 1.4rem; font-weight: bold; color: #fff; text-decoration: none; }
+        .bc-navbar .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; margin: 0 1rem; font-size: 0.95rem; }
+        .bc-navbar .nav-links a.active { color: #fff; font-weight: bold; }
+        .bc-navbar .nav-links a:hover { color: #fff; }
+        .balance-badge { background: #01FF19; color: #000; font-weight: bold; border-radius: 20px; padding: 5px 16px; font-size: 0.95rem; }
+        .bc-page { flex: 1; padding: 2rem; }
+        .bc-footer { text-align: center; padding: 1rem; font-size: 0.85rem; color: #ccc; }
+
+        /* CLIENT theme */
+        .theme-client .bc-navbar { background-color: #38618C; }
+        .theme-client .bc-page { background-color: #35A7FF; }
+        .theme-client .bc-footer { background-color: #38618C; }
+        .theme-client h1, .theme-client h2 { color: #fff; font-weight: bold; }
+
+        /* ADMIN theme */
+        .theme-admin .bc-navbar { background-color: #FF5964; }
+        .theme-admin .bc-page { background-color: #38618C; }
+        .theme-admin .bc-footer { background-color: #FF5964; }
+        .theme-admin h1, .theme-admin h2 { color: #fff; font-weight: bold; }
+
+        /* PUBLIC theme */
+        .theme-public .bc-navbar { background-color: #38618C; }
+        .theme-public .bc-page { background-color: #fff; }
+        .theme-public .bc-footer { background-color: #38618C; }
+
+        /* Cards */
+        .bc-card { background: #fff; border-radius: 10px; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn-green { background: #01FF19; border: none; color: #000; font-weight: bold; border-radius: 20px; padding: 6px 20px; }
+        .btn-green:hover { background: #00dd15; color: #000; }
+        .btn-sell { background: #FF5964; border: none; color: #fff; font-weight: bold; border-radius: 6px; padding: 5px 16px; }
+        .btn-sell:hover { background: #e04850; color: #fff; }
+        .profit-pos { color: #01FF19; font-weight: bold; }
+        .profit-neg { color: #FF5964; font-weight: bold; }
+
+        /* Forms */
+        .bc-input { border-radius: 20px; border: 1px solid #ccc; padding: 8px 16px; width: 100%; outline: none; }
+        .bc-input:focus { border-color: #35A7FF; }
+        .btn-green-full { background: #01FF19; border: none; color: #000; font-weight: bold; border-radius: 6px; padding: 10px; width: 100%; font-size: 1rem; cursor: pointer; }
+        .btn-green-full:hover { background: #00dd15; }
+
+        /* Stat cards */
+        .stat-card { background: #fff; border-radius: 10px; padding: 1.5rem; text-align: center; }
+        .stat-card .stat-number { font-size: 2rem; font-weight: bold; }
+        .stat-card .stat-label { color: #666; font-size: 0.9rem; }
+
+        /* Crypto card */
+        .crypto-card { background: #fff; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+        .crypto-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; color: #fff; margin-right: 10px; }
+    </style>
+</head>
+<body class="{% block theme %}theme-public{% endblock %}">
+
+{% block body %}{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

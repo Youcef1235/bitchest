@@ -1,0 +1,39 @@
+{% extends 'base_app.html.twig' %}
+{% block title %}{{ title }} - BitChest{% endblock %}
+
+{% block sidebar %}
+    <li><a href="{{ path('admin_dashboard') }}" class="nav-link"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+    <li><a href="{{ path('admin_users') }}" class="nav-link active"><i class="bi bi-people"></i> Users</a></li>
+    <li><a href="{{ path('admin_cryptos') }}" class="nav-link"><i class="bi bi-currency-bitcoin"></i> Cryptocurrencies</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><h5 class="mb-0">{{ title }}</h5></div>
+            <div class="card-body p-4">
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.firstname, 'First Name', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.lastname, 'Last Name', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {{ form_errors(form) }}
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="{{ path('admin_users') }}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
