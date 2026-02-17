@@ -1,0 +1,63 @@
+{% extends 'base_app.html.twig' %}
+{% block title %}Dashboard - BitChest{% endblock %}
+
+{% block nav %}
+    <a href="{{ path('client_dashboard') }}" class="active">Dashboard</a>
+    <a href="{{ path('client_portfolio') }}">Portfolio</a>
+    <a href="{{ path('client_cryptos') }}">Cryptos</a>
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+{% set totalValue = 0 %}
+{% set totalCost = 0 %}
+{% for cryptoId, data in wallet %}
+    {% set totalValue = totalValue + data.totalQuantity * data.currentPrice %}
+    {% set totalCost = totalCost + data.totalCost %}
+{% endfor %}
+{% set totalProfit = totalValue - totalCost %}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-5">
+        <div class="bc-card">
+            <small style="color:#999;">Portfolio Value</small>
+            <div style="font-size:1.6rem; font-weight:bold;">€ {{ totalValue|number_format(2, '.', ',') }}</div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="bc-card">
+            <small style="color:#999;">Total Profit / Loss</small>
+            <div class="fs-5 {{ totalProfit >= 0 ? 'profit-pos' : 'profit-neg' }}">
+                {{ totalProfit >= 0 ? '+' : '' }}€ {{ totalProfit|number_format(2, '.', ',') }}
+            </div>
+            <small style="color:#999;">Since start</small>
+        </div>
+    </div>
+</div>
+
+<div class="bc-card">
+    <h6 class="mb-3">Recent Transactions</h6>
+    {% if wallet is empty %}
+        <p style="color:#666;">No transactions yet. <a href="{{ path('client_cryptos') }}">Buy your first crypto!</a></p>
+    {% else %}
+        {% for cryptoId, data in wallet %}
+            {% for purchase in data.purchases %}
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="crypto-icon" style="background:#F7931A;">{{ data.crypto.symbol|slice(0,1) }}</div>
+                    <div>
+                        <div style="font-weight:bold;">{{ data.crypto.name }} ({{ data.crypto.symbol }})</div>
+                        <small style="color:#999;">Bought {{ purchase.quantity }} {{ data.crypto.symbol }}</small>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-weight:bold;">€ {{ (purchase.quantity * purchase.priceAtPurchase)|number_format(2, '.', ',') }}</div>
+                    <small style="color:#999;">{{ purchase.purchasedAt|date('Y-m-d') }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
