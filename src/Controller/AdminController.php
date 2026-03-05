@@ -20,23 +20,10 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'admin_dashboard')]
     public function dashboard(UserRepository $userRepo, CryptocurrencyRepository $cryptoRepo, CotationRepository $cotationRepo): Response
     {
-        $users = $userRepo->findBy(['roles' => []]);
         $cryptos = $cryptoRepo->findAll();
-        $latestCotations = [];
-        foreach ($cryptos as $crypto) {
-            $cotations = $cotationRepo->findBy(
-                ['cryptocurrency' => $crypto],
-                ['quotedAt' => 'DESC'],
-                1
-            );
-            if ($cotations) {
-                $latestCotations[$crypto->getId()] = $cotations[0]->getPrice();
-            }
-        }
         return $this->render('admin/dashboard.html.twig', [
             'userCount' => count($userRepo->findAll()),
             'cryptos' => $cryptos,
-            'latestCotations' => $latestCotations,
         ]);
     }
 

@@ -1,0 +1,63 @@
+{% extends 'base_app.html.twig' %}
+{% block title %}My Portfolio - BitChest{% endblock %}
+
+{% block nav %}
+    <a href="{{ path('client_dashboard') }}">Dashboard</a>
+    <a href="{{ path('client_portfolio') }}" class="active">Portfolio</a>
+    <a href="{{ path('client_cryptos') }}">Cryptos</a>
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Portfolio</h2>
+{% if wallet is empty %}
+    <div class="bc-card">
+        <p>Your portfolio is empty. <a href="{{ path('client_cryptos') }}">Buy your first crypto!</a></p>
+    </div>
+{% else %}
+    {% for cryptoId, data in wallet %}
+    <div class="bc-card mb-3">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="crypto-icon" style="background:#F7931A;">{{ data.crypto.symbol|slice(0,1) }}</div>
+                <div>
+                    <div style="font-weight:bold; font-size:1.05rem;">{{ data.crypto.name }} ({{ data.crypto.symbol }})</div>
+                    <small style="color:#999;">{{ data.totalQuantity|number_format(8, '.', '') }} {{ data.crypto.symbol }}</small>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-weight:bold;">€ {{ (data.totalQuantity * data.currentPrice)|number_format(2, '.', ',') }}</div>
+                <div class="{{ data.profitLoss >= 0 ? 'profit-pos' : 'profit-neg' }}" style="font-size:0.9rem;">
+                    {{ data.profitLoss >= 0 ? '+' : '' }}€ {{ data.profitLoss|number_format(2, '.', ',') }}
+                </div>
+            </div>
+        </div>
+        <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+            <thead>
+                <tr style="border-bottom:1px solid #eee; color:#666;">
+                    <th style="padding:6px 0;">Date</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in data.purchases %}
+                <tr style="border-bottom:1px solid #f5f5f5;">
+                    <td style="padding:6px 0;">{{ purchase.purchasedAt|date('d/m/Y') }}</td>
+                    <td>{{ purchase.quantity }} {{ data.crypto.symbol }}</td>
+                    <td>€ {{ purchase.priceAtPurchase|number_format(2, '.', ',') }}</td>
+                    <td>€ {{ (purchase.quantity * purchase.priceAtPurchase)|number_format(2, '.', ',') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="text-align:right; margin-top:0.8rem;">
+            <form method="post" action="{{ path('client_sell', {id: data.crypto.id}) }}"
+                  onsubmit="return confirm('Sell all {{ data.crypto.symbol }}?')" style="display:inline;">
+                <button type="submit" class="btn-sell">Sell All</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
